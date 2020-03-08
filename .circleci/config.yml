@@ -37,7 +37,7 @@ workflows:
   deploy_cloudformation:
     jobs:
       - deploy_cloudformation:
-          name: deploy-domains
+          name: deploy_to_prod
           filters:
             branches:
               only: master
