@@ -34,7 +34,7 @@ workflows:
             branches:
               only: master
       - build:
-        name: deploy_from_development
-        filters:
-          branches:
-            only: development
+          name: deploy_from_development
+          filters:
+            branches:
+              only: development
