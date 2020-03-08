@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  Stage:
+    Type: String
+
+Resources:
+  Master:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.us-east-2.amazonaws.com/arn:aws:s3:us-east-1:002232816753:accesspoint/cf-templates/cf-templates/development/432bcca747a95d1b9a985fcc82ab28ae.template
+  Development:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.us-east-2.amazonaws.com/arn:aws:s3:us-east-1:002232816753:accesspoint/cf-templates/cf-templates/development/432bcca747a95d1b9a985fcc82ab28ae.template
+
