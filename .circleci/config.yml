@@ -21,7 +21,7 @@ jobs:
           command: >
             aws cloudformation package
             --template-file << parameters.template >>
-            --s3-bucket addinfantitem
+            --s3-bucket s3://addinfantitem
             --s3-prefix $CIRCLE_BRANCH
             --output-template-file packaged.yml
       - run:
