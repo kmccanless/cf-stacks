@@ -7,9 +7,9 @@ Resources:
   Master:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: .stacks/r53/production.yaml
+      TemplateURL: ./stacks/r53/production.yaml
   Development:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: .stacks/r53/development.yaml
+      TemplateURL: ./stacks/r53/development.yaml
 
