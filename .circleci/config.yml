@@ -32,23 +32,21 @@ jobs:
             --stack-name << parameters.stack >>
             --no-fail-on-empty-changeset
             --region us-east-2
-
-
 workflows:
   version: 2
-  deploy_pgacom_prod:
+  deploy_cloudformation:
     jobs:
       - deploy_cloudformation:
-        name: deploy-domains
-        context: pgacom-prod
-        filters:
-          branches:
-            only: master
+          name: deploy-domains
+          context: pgacom-prod
+          filters:
+            branches:
+              only: master
       - deploy_cloudformation:
-        name: deploy_to_dev
-        context: develop
-        filters:
-          branches:
-            only: development
+          name: deploy_to_dev
+          context: develop
+          filters:
+            branches:
+              only: development
 
 
