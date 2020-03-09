@@ -4,7 +4,7 @@ Parameters:
   DevNameServers:
     Description: 'Comma separated string of Nameserver.'
     Type: String
-    Default: "a.b.c.d,e.f.g.h"
+    Default: ""
   
 Conditions:
   isUpdateNS: !Not [!Equals [!Ref DevNameServers, ""]]
