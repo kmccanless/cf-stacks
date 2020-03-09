@@ -12,6 +12,10 @@ jobs:
     docker:
       - image: circleci/python:3.6.8
     steps:
+      - when:
+        condition: <<parameters.nameservers>>
+        steps:
+          - run: echo "shouldnt see me"
       - checkout
       - run:
           name: Install AWS CLI
