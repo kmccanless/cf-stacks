@@ -55,7 +55,7 @@ commands:
             aws cloudformation package
             --template-file << parameters.template >>
             --s3-bucket cf-templates-3wxecbr0vy4b-us-east-2
-            --s3-prefix $CIRCLE_BRANCH
+            --s3-prefix <<parameters.stack>>
             --output-template-file packaged.yml
   deploy_template:
     parameters:
