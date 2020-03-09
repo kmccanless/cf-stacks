@@ -9,7 +9,7 @@ jobs:
       stack:
         default: ${CIRCLE_BRANCH}
         type: string
-      nameservers:
+      dev_nameservers:
         type: string
         default: ""
     docker:
@@ -32,17 +32,17 @@ jobs:
       - package_template:
           template: <<parameters.template>>
       - when:
-          condition: <<parameters.nameservers>>
+          condition: <<parameters.dev_nameservers>>
           steps:
             - deploy_template:
                 stack: <<parameters.stack>>
-                nameservers: <<parameters.nameservers>>
+                dev_nameservers: <<parameters.dev_nameservers>>
       - unless:
-          condition: <<parameters.nameservers>>
+          condition: <<parameters.dev_nameservers>>
           steps:
             - deploy_template:
                 stack: <<parameters.stack>>
-                nameservers: <<parameters.nameservers>>
+                dev_nameservers: <<parameters.dev_nameservers>>
 commands:
   package_template:
     parameters:
@@ -61,7 +61,7 @@ commands:
     parameters:
       stack:
         type: string
-      nameservers:
+      dev_nameservers:
         type: string
         default: ""
     steps:
@@ -73,7 +73,7 @@ commands:
             --stack-name <<parameters.stack>>
             --no-fail-on-empty-changeset
             --region us-east-2
-            --parameter-overrides DevNameservers=<<parameters.nameservers>>
+            --parameter-overrides DevNameservers=<<parameters.dev_nameservers>>
 workflows:
   version: 2
   deploy_cloudformation:
