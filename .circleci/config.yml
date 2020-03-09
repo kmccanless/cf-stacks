@@ -73,7 +73,7 @@ commands:
             --stack-name <<parameters.stack>>
             --no-fail-on-empty-changeset
             --region us-east-2
-            --parameter-overrides DevelopmentNameservers=<<parameters.nameservers>>
+            --parameter-overrides DevNameservers=<<parameters.nameservers>>
 workflows:
   version: 2
   deploy_cloudformation:

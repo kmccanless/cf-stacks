@@ -1,15 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
-  HostedZoneName:
-    Type: String
-    Default: pga.com
-  DevelopmentNameservers:
+
+  DevNameServers:
     Description: 'Comma separated string of Nameserver.'
     Type: String
-    Default: ""
+    Default: "a.b.c.d,e.f.g.h"
   
 Conditions:
-  isUpdateNS: !Not [!Equals [!Ref DevelopmentNameServers, ""]]
+  isUpdateNS: !Not [!Equals [!Ref DevNameServers, ""]]
 Resources:
   ProductionRecord:
     Type: AWS::Route53::RecordSet
@@ -29,4 +27,4 @@ Resources:
       Type: NS
       TTL: '1800'
       #Name: !Sub 'dev.${HostedZoneName}'
-      ResourceRecords: !Split [",", !Ref DevelopmentNameservers]
+      ResourceRecords: !Split [",", !Ref DevNameServers]
