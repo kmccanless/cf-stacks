@@ -19,7 +19,12 @@ jobs:
           condition: <<parameters.nameservers>>
           steps:
             - package:
-                nameservers: Hello World
+                template: Hello World
+      - unless:
+          condition: <<parameters.nameservers>>
+          steps:
+            - package:
+                template: Goodbye World
       - checkout
       - run:
           name: Install AWS CLI
@@ -44,10 +49,10 @@ jobs:
 commands:
   package:
     parameters:
-      nameservers:
+      template:
         type: string
     steps:
-      - run: echo <<parameters.nameservers>>
+      - run: echo <<parameters.template>>
 workflows:
   version: 2
   deploy_cloudformation:
