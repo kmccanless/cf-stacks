@@ -4,3 +4,4 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./stacks/r53/development.yml
+      TimeoutInMinutes: 3

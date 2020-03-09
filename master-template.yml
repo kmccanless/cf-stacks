@@ -1,7 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  DevNameServers:
+    Description: 'Comma separated string of Nameserver.'
+    Type: String
 Resources:
   Production:
     Type: AWS::CloudFormation::Stack
     Properties:
+      Parameters:
+        DevNameServers: !Ref DevNameServers
       TemplateURL: ./stacks/r53/production.yml
+      TimeoutInMinutes: 3
 
