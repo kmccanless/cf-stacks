@@ -21,7 +21,7 @@ jobs:
           command: >
             aws cloudformation package
             --template-file << parameters.template >>
-            --s3-bucket arn:aws:s3:us-east-1:002232816753:accesspoint/cf-templates
+            --s3-bucket cf-templates-3wxecbr0vy4b-us-east-2
             --s3-prefix $CIRCLE_BRANCH
             --output-template-file packaged.yml
       - run:
@@ -29,6 +29,7 @@ jobs:
           command: >
             aws cloudformation deploy
             --template-file ./packaged.yml
+            --capabilities CAPABILITY_IAM
             --stack-name << parameters.stack >>
             --no-fail-on-empty-changeset
             --region us-east-2

@@ -1,11 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
-  Production:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: https://s3.us-east-2.amazonaws.com/arn:aws:s3:us-east-1:002232816753:accesspoint/cf-templates/cf-templates/developmentH/3908b465c178a340cb7b58831b220206.template
   Development:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.us-east-2.amazonaws.com/arn:aws:s3:us-east-1:002232816753:accesspoint/cf-templates/cf-templates/developmentH/093f1eaad2eeffc97d4f638284fb3ff9.template
+      TemplateURL: https://s3.us-east-2.amazonaws.com/cf-templates-3wxecbr0vy4b-us-east-2/developmentH/25667ddad8aec305e5f14afbc50a60b0.template
 

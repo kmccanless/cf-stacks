@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
-  Development:
+  Production:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./stacks/r53/development.yml
+      TemplateURL: ./stacks/r53/production.yml
 
