@@ -11,7 +11,7 @@ jobs:
         type: string
       dev_nameservers:
         type: string
-        default: ""
+        default: "a.b.c.d,e.f.g.h"
     docker:
       - image: circleci/python:3.6.8
     steps:
