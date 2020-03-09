@@ -18,7 +18,8 @@ jobs:
       - when:
           condition: <<parameters.nameservers>>
           steps:
-            - run: echo "shouldnt see me"
+            - package:
+                nameservers: Hello World
       - checkout
       - run:
           name: Install AWS CLI
@@ -40,6 +41,13 @@ jobs:
             --stack-name << parameters.stack >>
             --no-fail-on-empty-changeset
             --region us-east-2
+commands:
+  package:
+    parameters:
+      nameservers:
+        type: string
+    steps:
+      - run: echo <<parameters.nameservers>>
 workflows:
   version: 2
   deploy_cloudformation:
