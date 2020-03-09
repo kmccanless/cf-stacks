@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
-  Development:
+  Production:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.us-east-2.amazonaws.com/cf-templates-3wxecbr0vy4b-us-east-2/developmentH/25667ddad8aec305e5f14afbc50a60b0.template
+      TemplateURL: https://s3.us-east-2.amazonaws.com/cf-templates-3wxecbr0vy4b-us-east-2/test/5ce0ff3ab2aaaaec5e650d2e3848d99e.template
 
