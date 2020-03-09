@@ -15,30 +15,42 @@ jobs:
     docker:
       - image: circleci/python:3.6.8
     steps:
-      - when:
-          condition: <<parameters.nameservers>>
-          steps:
-            - package:
-                template: Hello World
-      - unless:
-          condition: <<parameters.nameservers>>
-          steps:
-            - package:
-                template: Goodbye World
       - checkout
       - run:
           name: Install AWS CLI
           command: sudo pip install awscli
+      - when:
+          condition: <<parameters.nameservers>>
+          steps:
+            - package_template:
+                template: master-template.yml
+      - unless:
+          condition: <<parameters.nameservers>>
+          steps:
+            - package_template:
+                template: development-template.yml
+      - deploy_template:
+          stack: <<parameters.stack>>
+commands:
+  package_template:
+    parameters:
+      template:
+        type: string
+    steps:
+      - run: echo <<parameters.template>>
       - run:
-          name: Cloudformation package
           command: >
             aws cloudformation package
             --template-file << parameters.template >>
             --s3-bucket cf-templates-3wxecbr0vy4b-us-east-2
             --s3-prefix $CIRCLE_BRANCH
             --output-template-file packaged.yml
+  deploy_template:
+    parameters:
+      stack:
+        type: string
+    steps:
       - run:
-          name: Cloudformation deploy
           command: >
             aws cloudformation deploy
             --template-file ./packaged.yml
@@ -46,13 +58,6 @@ jobs:
             --stack-name << parameters.stack >>
             --no-fail-on-empty-changeset
             --region us-east-2
-commands:
-  package:
-    parameters:
-      template:
-        type: string
-    steps:
-      - run: echo <<parameters.template>>
 workflows:
   version: 2
   deploy_cloudformation:
