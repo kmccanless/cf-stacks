@@ -6,6 +6,7 @@ Parameters:
   DevelopmentNameservers:
     Description: 'Comma separated string of Nameserver.'
     Type: String
+    Default: ""
   
 Conditions:
   isUpdateNS: !Not [!Equals [!Ref DevelopmentNameServers, ""]]
