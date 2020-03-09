@@ -19,18 +19,30 @@ jobs:
       - run:
           name: Install AWS CLI
           command: sudo pip install awscli
+      # - when:
+      #     condition: <<parameters.nameservers>>
+      #     steps:
+      #       - package_template:
+      #           template: master-template.yml
+      # - unless:
+      #     condition: <<parameters.nameservers>>
+      #     steps:
+      #       - package_template:
+      #           template: <<parameters.template>>
+      - package_template:
+          template: <<parameters.template>>
       - when:
           condition: <<parameters.nameservers>>
           steps:
-            - package_template:
-                template: master-template.yml
+            - deploy_template:
+                stack: <<parameters.stack>>
+                nameservers: <<parameters.nameservers>>
       - unless:
           condition: <<parameters.nameservers>>
           steps:
-            - package_template:
-                template: development-template.yml
-      - deploy_template:
-          stack: <<parameters.stack>>
+            - deploy_template:
+                stack: <<parameters.stack>>
+                nameservers: <<parameters.nameservers>>
 commands:
   package_template:
     parameters:
@@ -49,15 +61,19 @@ commands:
     parameters:
       stack:
         type: string
+      nameservers:
+        type: string
+        default: ""
     steps:
       - run:
           command: >
             aws cloudformation deploy
             --template-file ./packaged.yml
             --capabilities CAPABILITY_IAM
-            --stack-name << parameters.stack >>
+            --stack-name <<parameters.stack>>
             --no-fail-on-empty-changeset
             --region us-east-2
+            --parameter-overrides DevelopmentNameservers=<<parameters.nameservers>>
 workflows:
   version: 2
   deploy_cloudformation:
