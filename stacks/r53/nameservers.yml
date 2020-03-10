@@ -6,10 +6,11 @@ Parameters:
 Resources:
   DevelopmentNameServers:
     Type: AWS::Route53::RecordSet
-        Properties:
-          HostedZoneId: Z2UH9G8UNVTL3A
-          Name: dev.addinfantitem.com
-          Type: NS
-          TTL: '1800'
-          #Name: !Sub 'dev.${HostedZoneName}'
-          ResourceRecords: !Split [",", !Ref DevNameServers]
+    Properties:
+      #HostedZoneId: Z2UH9G8UNVTL3A
+      HostedZoneName: addinfantitem.com
+      Name: dev.addinfantitem.com
+      Type: NS
+      TTL: '1800'
+      #Name: !Sub 'dev.${HostedZoneName}'
+      ResourceRecords: !Split [",", !Ref DevNameServers]
