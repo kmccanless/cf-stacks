@@ -30,6 +30,7 @@ jobs:
       #       - package_template:
       #           template: <<parameters.template>>
       - package_template:
+          stack: <<parameters.stack>>
           template: <<parameters.template>>
       - deploy_template:
           stack: <<parameters.stack>>
@@ -51,6 +52,8 @@ commands:
     parameters:
       template:
         type: string
+      stack:
+        type: string
     steps:
       - run: echo <<parameters.template>>
       - run:
@@ -58,7 +61,7 @@ commands:
             aws cloudformation package
             --template-file << parameters.template >>
             --s3-bucket cf-templates-3wxecbr0vy4b-us-east-2
-            --s3-prefix $CIRCLE_BRANCH
+            --s3-prefix << parameters.stack >>
             --output-template-file packaged.yml
   deploy_template:
     parameters:
@@ -76,7 +79,7 @@ commands:
             --stack-name <<parameters.stack>>
             --no-fail-on-empty-changeset
             --region us-east-2
-            --parameter-overrides "DevNameServers=<<parameters.dev_nameservers>>" "DeployBranch=<<parameter.stack>>"
+            --parameter-overrides "DevNameServers=<<parameters.dev_nameservers>>" "DeployBranch=<<parameters.stack>>"
 workflows:
   version: 2
   deploy_cloudformation:
