@@ -12,7 +12,9 @@ Conditions:
   IsDevelopment: !Equals
     - !Ref DeployBranch
     - 'development'
-  IsUpdateNS: !Not [!Equals [!Ref DevNameServers, ""]]
+  IsUpdateNS: !And
+    - !Not [!Equals [!Ref DevNameServers, ""]]
+    - !Equals ["master", !Ref DeployBranch]
 Resources:
   Production:
     Condition: IsMaster
@@ -30,7 +32,6 @@ Resources:
       TimeoutInMinutes: 3
   Nameservers:
     Condition: IsUpdateNS
-    Condition: IsMaster
     Type: AWS::CloudFormation::Stack
     Properties:
       Parameters:
