@@ -36,6 +36,6 @@ Resources:
     Properties:
       Parameters:
         DevNameServers: !Ref DevNameServers
-      TemplateURL: ./stacks/r53/Nameservers.yml
+      TemplateURL: ./stacks/r53/nameservers.yml
       TimeoutInMinutes: 3
 
