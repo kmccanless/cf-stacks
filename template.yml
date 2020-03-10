@@ -1,7 +1,40 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  DeployBranch:
+    Type: String
+  DevNameServers:
+    Description: 'Comma separated string of Nameserver.'
+    Type: String
+Conditions:
+  IsMaster: !Equals
+    - !Ref DeployBranch
+    - 'master'
+  IsDevelopment: !Equals
+    - !Ref DeployBranch
+    - 'development'
+  IsUpdateNS: !Not [!Equals [!Ref DevNameServers, ""]]
 Resources:
+  Production:
+    Condition: IsMaster
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        DevNameServers: !Ref DevNameServers
+      TemplateURL: ./stacks/r53/production.yml
+      TimeoutInMinutes: 3
   Development:
+    Condition: IsDevelopment
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: ./stacks/r53/development.yml
+      TimeoutInMinutes: 3
+  Nameservers:
+    Condition: IsUpdateNS
+    Condition: IsMaster
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        DevNameServers: !Ref DevNameServers
+      TemplateURL: ./stacks/r53/Nameservers.yml
+      TimeoutInMinutes: 3
 

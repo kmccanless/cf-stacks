@@ -4,14 +4,14 @@ jobs:
   deploy_cloudformation:
     parameters:
       template:
-        default: ${CIRCLE_BRANCH}-template.yml
+        default: template.yml
         type: string
       stack:
         default: ${CIRCLE_BRANCH}
         type: string
       dev_nameservers:
         type: string
-        default: "a.b.c.d,e.f.g.h"
+        default: ""
     docker:
       - image: circleci/python:3.6.8
     steps:
@@ -31,18 +31,21 @@ jobs:
       #           template: <<parameters.template>>
       - package_template:
           template: <<parameters.template>>
-      - when:
-          condition: <<parameters.dev_nameservers>>
-          steps:
-            - deploy_template:
-                stack: <<parameters.stack>>
-                dev_nameservers: <<parameters.dev_nameservers>>
-      - unless:
-          condition: <<parameters.dev_nameservers>>
-          steps:
-            - deploy_template:
-                stack: <<parameters.stack>>
-                dev_nameservers: <<parameters.dev_nameservers>>
+      - deploy_template:
+          stack: <<parameters.stack>>
+          dev_nameservers: <<parameters.dev_nameservers>>
+      # - when:
+      #     condition: <<parameters.dev_nameservers>>
+      #     steps:
+      #       - deploy_template:
+      #           stack: <<parameters.stack>>
+      #           dev_nameservers: <<parameters.dev_nameservers>>
+      # - unless:
+      #     condition: <<parameters.dev_nameservers>>
+      #     steps:
+      #       - deploy_template:
+      #           stack: <<parameters.stack>>
+      #           dev_nameservers: <<parameters.dev_nameservers>>
 commands:
   package_template:
     parameters:
@@ -73,7 +76,7 @@ commands:
             --stack-name <<parameters.stack>>
             --no-fail-on-empty-changeset
             --region us-east-2
-            --parameter-overrides "DevNameServers=<<parameters.dev_nameservers>>"
+            --parameter-overrides "DevNameServers=<<parameters.dev_nameservers>>" "DeployBranch=<<parameter.stack>>"
 workflows:
   version: 2
   deploy_cloudformation:

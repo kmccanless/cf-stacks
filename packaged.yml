@@ -1,7 +1,23 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  DeployBranch:
+    Type: String
+  DevNameServers:
+    Description: Comma separated string of Nameserver.
+    Type: String
+Conditions:
+  IsMaster:
+    Fn::Equals:
+    - Ref: DeployBranch
+    - master
 Resources:
   Production:
+    Condition: IsMaster
     Type: AWS::CloudFormation::Stack
     Properties:
+      Parameters:
+        DevNameServers:
+          Ref: DevNameServers
       TemplateURL: https://s3.us-east-2.amazonaws.com/cf-templates-3wxecbr0vy4b-us-east-2/master/1376b262cc02b79cdeca6612411eddfb.template
+      TimeoutInMinutes: 3
 

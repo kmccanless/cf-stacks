@@ -1,10 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
+  DeployBranch:
+    Type: String
   DevNameServers:
     Description: 'Comma separated string of Nameserver.'
     Type: String
+Conditions:
+  IsMaster: !Equals
+    - !Ref DeployBranch
+    - 'master'
 Resources:
   Production:
+    Condition: IsMaster
     Type: AWS::CloudFormation::Stack
     Properties:
       Parameters:

@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  DevNameServers:
+    Description: 'Comma separated string of Nameserver.'
+    Type: String
+#Conditions:
+#  isUpdateNS: !Not [!Equals [!Ref DevNameServers, ""]]
+Resources:
+  ProductionRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: Z2UH9G8UNVTL3A
+      Name: prod.addinfantitem.com
+      Type: A
+      TTL: '1800'
+      ResourceRecords: 
+      - 8.8.8.8
+  NewNS:
+    Type: AWS::Route53::RecordSet
+#    Condition: isUpdateNS
+    Properties:
+      HostedZoneId: Z2UH9G8UNVTL3A
+      Name: dev.addinfantitem.com
+      Type: NS
+      TTL: '1800'
+      #Name: !Sub 'dev.${HostedZoneName}'
+      ResourceRecords: !Split [",", !Ref DevNameServers]
